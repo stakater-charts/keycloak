@@ -6,22 +6,25 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      configmap.fabric8.io/update-on-change: {{ template "name" . }}
+      configmap.fabric8.io/update-on-change: keycloak
       fabric8.io/target-platform: kubernetes
     labels:
       app: {{ template "name" . }}
       chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
       release: {{ .Release.Name | quote }}
       heritage: {{ .Release.Service | quote }}
-    name: {{ template "name" . }}
+      provider: fabric8
+      project: keycloak
+      version: 1.0.2
+      group: io.fabric8.apps
+    name: keycloak
   spec:
     replicas: 1
     selector:
       matchLabels:
-        app: {{ template "name" . }}
-        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        release: {{ .Release.Name | quote }}
-        heritage: {{ .Release.Service | quote }}
+        project: keycloak
+        provider: fabric8
+        group: io.fabric8.apps
     strategy:
       type: Recreate
     template:
@@ -132,13 +135,17 @@ items:
                   "value": "true"
                 }]
             }]
-          configmap.fabric8.io/update-on-change: {{ template "name" . }}
+          configmap.fabric8.io/update-on-change: keycloak
           fabric8.io/target-platform: kubernetes
         labels:
           app: {{ template "name" . }}
           chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
           release: {{ .Release.Name | quote }}
           heritage: {{ .Release.Service | quote }}
+          provider: fabric8
+          project: keycloak
+          version: 1.0.2
+          group: io.fabric8.apps
       spec:
         containers:
         - args:
@@ -193,8 +200,8 @@ items:
             value: "true"
           - name: HIDE_GITHUB_BTN
             value: "false"
-          image: "{{ .Values.keycloak.dbImage.name }}:{{ .Values.keycloak.dbImage.tag }}"
-          imagePullPolicy: {{ .Values.keycloak.dbImage.pullPolicy }}
+          image: "{{ .Values.keycloak.image.name }}:{{ .Values.keycloak.image.tag }}"
+          imagePullPolicy: {{ .Values.keycloak.image.pullPolicy }}
           livenessProbe:
             httpGet:
               path: /auth
@@ -235,15 +242,19 @@ items:
       chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
       release: {{ .Release.Name | quote }}
       heritage: {{ .Release.Service | quote }}
-    name: {{ template "name" . }}-db
+      service: keycloak-db
+      provider: fabric8
+      project: keycloak-db
+      version: 1.0.2
+      group: io.fabric8.apps
+    name: keycloak-db
   spec:
     replicas: 1
     selector:
       matchLabels:
-        app: {{ template "name" . }}-db
-        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        release: {{ .Release.Name | quote }}
-        heritage: {{ .Release.Service | quote }}
+        project: keycloak-db
+        provider: fabric8
+        group: io.fabric8.apps
     template:
       metadata:
         annotations:
@@ -253,6 +264,11 @@ items:
           chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
           release: {{ .Release.Name | quote }}
           heritage: {{ .Release.Service | quote }}
+          service: keycloak-db
+          provider: fabric8
+          project: keycloak-db
+          version: 1.0.2
+          group: io.fabric8.apps
       spec:
         containers:
         - env:
@@ -266,8 +282,8 @@ items:
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
-          image: "{{ .Values.keycloak.image.name }}:{{ .Values.keycloak.image.tag }}"
-          imagePullPolicy: {{ .Values.keycloak.image.pullPolicy }}
+          image: "{{ .Values.keycloak.dbImage.name }}:{{ .Values.keycloak.dbImage.tag }}"
+          imagePullPolicy: {{ .Values.keycloak.dbImage.pullPolicy }}
           livenessProbe:
             exec:
               command:
