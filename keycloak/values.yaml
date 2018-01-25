@@ -1,0 +1,12 @@
+keycloak:
+  namespace: tools
+  image:
+    name: fabric8/keycloak-postgres
+    tag: "v15751c8"
+    pullPolicy: IfNotPresent
+  dbImage:
+    name: registry.centos.org/postgresql/postgresql
+    tag: "9.6"
+    pullPolicy: IfNotPresent
+  service:
+    ingressClass: internal-ingress
