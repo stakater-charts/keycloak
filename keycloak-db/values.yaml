@@ -12,4 +12,6 @@ keycloakdb:
     database: keycloak
     username: keycloak
     password: keycloak
-  pvcName: keycloak-db-storage
+  persistence:
+    enabled: false
+    volumeClaimName: keycloak-db-storage

@@ -70,5 +70,9 @@ items:
             readOnly: false
         volumes:
         - name: keycloak-db-postgresql-data
+        {{- if .Values.keycloakdb.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: {{ .Values.keycloakdb.pvcName }}
+            claimName: {{ .Values.keycloakdb.persistence.volumeClaimName }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
