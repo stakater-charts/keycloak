@@ -1,12 +1,24 @@
 keycloak:
+  labels:
+    group: com.stakater.platform
+    provider: stakater
+    version: 3.2.0
   namespace: tools
   image:
     name: fabric8/keycloak-postgres
     tag: "v15751c8"
     pullPolicy: IfNotPresent
-  dbImage:
-    name: registry.centos.org/postgresql/postgresql
-    tag: "9.6"
-    pullPolicy: IfNotPresent
   service:
     ingressClass: internal-ingress
+  config:
+    database:
+      host: 
+      name: 
+      username: 
+      password: 
+    user: 
+    password: 
+    clientSecret: 
+    privateKey: 
+    publicKey: 
+    realm: 

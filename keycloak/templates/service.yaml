@@ -11,15 +11,9 @@ items:
         kubernetes.io/ingress.class: {{ .Values.keycloak.service.ingressClass }}
     labels:
       expose: "true"
-      provider: fabric8
-      project: keycloak
-      version: 1.0.2
-      group: io.fabric8.apps
-      app: {{ template "name" . }}
-      chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-      release: {{ .Release.Name | quote }}
-      heritage: {{ .Release.Service | quote }}
-    name: keycloak
+{{ include "labels.stakater" . | indent 6 }}
+{{ include "labels.chart" . | indent 6 }}
+    name: {{ template "name" . }}
   spec:
     ports:
     - name: http
@@ -27,32 +21,4 @@ items:
       protocol: TCP
       targetPort: 8080
     selector:
-      project: keycloak
-      provider: fabric8
-      group: io.fabric8.apps
-- apiVersion: v1
-  kind: Service
-  metadata:
-    labels:
-      service: keycloak-db
-      provider: fabric8
-      project: keycloak-db
-      version: 1.0.2
-      group: io.fabric8.apps
-      app: {{ template "name" . }}-db
-      chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-      release: {{ .Release.Name | quote }}
-      heritage: {{ .Release.Service | quote }}
-    name: keycloak-db
-  spec:
-    ports:
-    - name: postgres
-      port: 5432
-      protocol: TCP
-      targetPort: 5432
-    selector:
-      service: keycloak-db
-      project: keycloak-db
-      provider: fabric8
-      group: io.fabric8.apps
-    type: ClusterIP
+{{ include "labels.selector" . | indent 6 }}

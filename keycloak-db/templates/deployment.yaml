@@ -1,0 +1,78 @@
+---
+apiVersion: v1
+kind: List
+items:
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    labels:
+{{ include "labels.stakater" . | indent 6 }}
+{{ include "labels.chart" . | indent 6 }}
+    name: {{ template "name" . }}
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+{{ include "labels.selector" . | indent 8 }}
+    template:
+      metadata:
+        labels:
+{{ include "labels.selector" . | indent 10 }}
+      spec:
+        initContainers:
+        - name: fmp-volume-permission
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          command: ['chmod', '777', '/var/lib/pgsql/data']
+          volumeMounts:
+            - name: keycloak-db-postgresql-data
+              mountPath: /var/lib/pgsql/data
+        containers:
+        - env:
+          - name: POSTGRESQL_DATABASE
+            value: {{ .Values.keycloakdb.config.database }}
+          - name: POSTGRESQL_PASSWORD
+            value: {{ .Values.keycloakdb.config.password }}
+          - name: POSTGRESQL_USER
+            value: {{ .Values.keycloakdb.config.username }}
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          image: "{{ .Values.keycloakdb.image.name }}:{{ .Values.keycloakdb.image.tag }}"
+          imagePullPolicy: {{ .Values.keycloakdb.image.pullPolicy }}
+          livenessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - exec pg_isready --host $POD_IP
+            failureThreshold: 6
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+          name: {{ template "name" . }}
+          ports:
+          - containerPort: 5432
+            name: postgresql
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - exec pg_isready --host $POD_IP
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            timeoutSeconds: 3
+          volumeMounts:
+          - mountPath: /var/lib/pgsql/data
+            name: keycloak-db-postgresql-data
+            readOnly: false
+        volumes:
+        - name: keycloak-db-postgresql-data
+        {{- if .Values.keycloakdb.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.keycloakdb.persistence.volumeClaimName }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
