@@ -17,13 +17,13 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 
 {{- define "labels.selector" -}}
 app: {{ template "name" . }}
-group: {{ .Values.keycloak.labels.group }}
-provider: {{ .Values.keycloak.labels.provider }}
+group: {{ .Values.keycloakdbStorage.labels.group }}
+provider: {{ .Values.keycloakdbStorage.labels.provider }}
 {{- end -}}
 
 {{- define "labels.stakater" -}}
 {{ template "labels.selector" . }}
-version: {{ .Values.keycloak.labels.version }}
+version: {{ .Values.keycloakdbStorage.labels.version }}
 {{- end -}}
 
 {{- define "labels.chart" -}}

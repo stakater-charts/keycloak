@@ -1,0 +1,15 @@
+keycloakdb:
+  labels:
+    group: com.stakater.platform
+    provider: stakater
+    version: 3.2.0
+  namespace: tools
+  image:
+    name: registry.centos.org/postgresql/postgresql
+    tag: "9.6"
+    pullPolicy: IfNotPresent
+  config:
+    database: keycloak
+    username: keycloak
+    password: keycloak
+  pvcName: keycloak-db-storage

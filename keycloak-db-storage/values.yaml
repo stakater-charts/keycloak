@@ -1,0 +1,9 @@
+keycloakdbStorage:
+  labels:
+    group: com.stakater.platform
+    provider: stakater
+    version: 3.2.0
+  namespace: tools
+  capacity: 10Gi
+  efs:
+    server: fs-f6d1425f.efs.us-west-2.amazonaws.com
