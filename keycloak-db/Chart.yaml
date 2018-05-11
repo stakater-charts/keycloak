@@ -1,7 +1,7 @@
 apiVersion: v1
 name: keycloak-db
 description: keycloak-db chart that runs on kubernetes
-version: 1.0.0
+version: 1.0.1
 keywords:
   - keycloak-db
   - kubernetes
