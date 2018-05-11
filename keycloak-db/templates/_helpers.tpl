@@ -23,7 +23,7 @@ provider: {{ .Values.keycloakdb.labels.provider }}
 
 {{- define "labels.stakater" -}}
 {{ template "labels.selector" . }}
-version: {{ .Values.keycloakdb.labels.version }}
+version: "{{ .Values.keycloakdb.labels.version }}"
 {{- end -}}
 
 {{- define "labels.chart" -}}
