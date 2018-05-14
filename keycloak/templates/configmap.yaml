@@ -22,4 +22,5 @@ items:
     keycloak.url: http://keycloak
     auth.api.url: http://auth
     #TODO: Update keycloak config and remove fabric8 traces
-    fabric8-realm.json: {{ .Values.keycloak.config.realm }}
+    fabric8-realm.json: |-
+{{ .Values.keycloak.config.realm | indent 6 }}

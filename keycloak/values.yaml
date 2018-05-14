@@ -12,13 +12,14 @@ keycloak:
     ingressClass: internal-ingress
   config:
     database:
-      host: 
-      name: 
-      username: 
-      password: 
-    user: 
-    password: 
-    clientSecret: 
-    privateKey: 
-    publicKey: 
-    realm: 
+      host:
+      name:
+      username:
+      password:
+    user:
+    password:
+    clientSecret:
+    privateKey:
+    publicKey:
+    realm: |-
+      {}
