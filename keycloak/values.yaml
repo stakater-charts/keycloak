@@ -10,6 +10,7 @@ keycloak:
     pullPolicy: IfNotPresent
   service:
     ingressClass: internal-ingress
+    forceSslRedirect: "true"
   config:
     database:
       host:
