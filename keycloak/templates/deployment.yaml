@@ -22,6 +22,8 @@ items:
       metadata:
         annotations:
           configmap.fabric8.io/update-on-change: {{ template "name" . }}
+          pod.alpha.kubernetes.io/init-containers: null
+          pod.beta.kubernetes.io/init-containers: null
         labels:
 {{ include "labels.selector" . | indent 10 }}
       spec:
