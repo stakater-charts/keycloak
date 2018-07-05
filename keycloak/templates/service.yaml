@@ -9,6 +9,12 @@ items:
       fabric8.io/ingress.annotations: |-
         ingress.kubernetes.io/force-ssl-redirect: {{ .Values.keycloak.service.forceSslRedirect }}
         kubernetes.io/ingress.class: {{ .Values.keycloak.service.ingressClass }}
+      {{- with .Values.keycloak.forecastle.expose }}
+        forecastle.stakater.com/expose: {{ . }}
+      {{- end }}
+      {{- with .Values.keycloak.forecastle.icon }}
+        forecastle.stakater.com/icon: {{ . }}
+      {{- end }}
     labels:
       expose: "true"
 {{ include "labels.stakater" . | indent 6 }}
