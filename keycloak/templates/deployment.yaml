@@ -6,7 +6,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      configmap.fabric8.io/update-on-change: {{ template "name" . }}
+      configmap.reloader.stakater.com/reload: {{ template "name" . }}
+      secret.reloader.stakater.com/reload: {{ template "name" . }}
     labels:
 {{ include "labels.stakater" . | indent 6 }}
 {{ include "labels.chart" . | indent 6 }}
@@ -21,7 +22,6 @@ items:
     template:
       metadata:
         annotations:
-          configmap.fabric8.io/update-on-change: {{ template "name" . }}
           pod.alpha.kubernetes.io/init-containers: null
           pod.beta.kubernetes.io/init-containers: null
         labels:
