@@ -9,8 +9,18 @@ keycloak:
     tag: "v15751c8"
     pullPolicy: IfNotPresent
   service:
-    ingressClass: internal-ingress
-    forceSslRedirect: "true"
+    annotations:
+      config.xposer.stakater.com/Domain: stackator.com
+      config.xposer.stakater.com/IngressNameTemplate: '{{.Service}}-{{.Namespace}}'
+      config.xposer.stakater.com/IngressURLTemplate: '{{.Service}}.{{.Namespace}}.{{.Domain}}'
+      config.xposer.stakater.com/TLS: "true"
+      xposer.stakater.com/annotations: |-
+        kubernetes.io/ingress.class: internal-ingress
+        ingress.kubernetes.io/force-ssl-redirect: true
+        certmanager.k8s.io/cluster-issuer: letsencrypt-production
+# Add these annotations under xposer.stakater.com/annotations
+# forecastle.stakater.com/expose: true
+# forecastle.stakater.com/icon: https://cdn-images-1.medium.com/max/521/0*D__TQ7qMdoq3Y7kP.png
   config:
     database:
       host:
@@ -24,6 +34,3 @@ keycloak:
     publicKey:
     realm: |-
       {}
-  forecastle: {}
-    # icon: https://cdn-images-1.medium.com/max/521/0*D__TQ7qMdoq3Y7kP.png
-    # expose: "true"
