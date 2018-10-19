@@ -5,9 +5,9 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
-{{- if .Values.alertmanager.service.annotations }}
+{{- if .Values.keycloak.service.annotations }}
     annotations:
-{{ toYaml .Values.alertmanager.service.annotations | indent 6 }}
+{{ toYaml .Values.keycloak.service.annotations | indent 6 }}
 {{- end }}
     labels:
       expose: "true"
