@@ -23,7 +23,9 @@ keycloak:
 # forecastle.stakater.com/icon: https://cdn-images-1.medium.com/max/521/0*D__TQ7qMdoq3Y7kP.png
   config:
     database:
-      host:
+      host: keycloak-db
+      port: "5432"
+      vendor:
       name:
       username:
       password:
@@ -34,3 +36,12 @@ keycloak:
     publicKey:
     realm: |-
       {}
+  theme:
+    gitimage:
+      name: stakater/git-cloner
+      tag: 1.0
+      pullPolicy: IfNotPresent
+    repo:
+      link: git@gitlab.com:carbook/keycloak-theme.git
+      branch: master
+      ssh:

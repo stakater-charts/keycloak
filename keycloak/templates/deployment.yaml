@@ -32,7 +32,7 @@ items:
           image: fabric8/envsubst-file:1.0.0
           imagePullPolicy: IfNotPresent
           args:
-          - "fabric8-realm.json"
+          - "realm.json"
           env:
           - name: AUTH_URL
             valueFrom:
@@ -75,8 +75,8 @@ items:
             value: "false"
           volumeMounts:
           - name: keycloak-config
-            mountPath: /workdir/fabric8-realm.json
-            subPath: config/fabric8-realm.json
+            mountPath: /workdir/realm.json
+            subPath: config/realm.json
           - name: keycloak-subst-config
             mountPath: /processed
         - name: init-dependencyservice
@@ -88,6 +88,20 @@ items:
             value: "1"
           - name: DEPENDENCY_LOG_VERBOSE
             value: "true"
+        - name: git-cloner
+          image: "{{ .Values.keycloak.theme.gitimage.name }}:{{ .Values.keycloak.theme.gitimage.tag }}"
+          imagePullPolicy: {{ .Values.keycloak.theme.gitimage.pullPolicy }}
+          env:
+          - name: REPO_LINK
+            value: {{ .Values.keycloak.theme.repo.link }}
+          - name: REPO_BRANCH
+            value: {{ .Values.keycloak.theme.repo.branch }}
+          volumeMounts:
+          - name: gitrepo
+            mountPath: /repository
+          - name: git-ssh
+            mountPath: /key/id_rsa
+            subPath: id_rsa
         containers:
         - args:
           - -b $(INTERNAL_POD_IP)
@@ -178,8 +192,8 @@ items:
           name: keycloak-subst-config
         - configMap:
             items:
-            - key: fabric8-realm.json
-              path: config/fabric8-realm.json
+            - key: realm.json
+              path: config/realm.json
             name: {{ template "name" . }}
           name: keycloak-config
         - gitRepo:

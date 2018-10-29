@@ -15,8 +15,10 @@ items:
 {{ include "labels.chart" . | indent 6 }}
     name: {{ template "name" . }}
   data:
-    db.url: keycloak-db
-    db.port: "5432"
+    db.name: {{ .Values.keycloak.config.database.name }}
+    db.url: {{ .Values.keycloak.config.database.host }}
+    db.port: {{ .Values.keycloak.config.database.port }}
+    db.vendor: {{ .Values.keycloak.config.database.vendor }}
     apiserver.url: http://kubernetes
     jenkins.url: http://jenkins
     keycloak.url: http://keycloak
