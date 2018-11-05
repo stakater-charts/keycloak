@@ -1,7 +1,7 @@
 apiVersion: v1
 name: keycloak-db-storage
 description: keycloak-db-storage chart that runs on kubernetes
-version: 1.0.8
+version: 1.0.9
 keywords:
   - keycloak-db-storage
   - kubernetes
