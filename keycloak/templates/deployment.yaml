@@ -100,17 +100,17 @@ items:
           env:
           - name: DB_VENDOR
             value: postgres
-          - name: POSTGRES_HOSTNAME
+          - name: DB_ADDR
             valueFrom:
               secretKeyRef:
                 key: db.host
                 name: {{ template "name" . }}
-          - name: POSTGRES_USER
+          - name: DB_USER
             valueFrom:
               secretKeyRef:
                 key: db.user
                 name: {{ template "name" . }}
-          - name: POSTGRES_PASSWORD
+          - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
                 key: db.password
