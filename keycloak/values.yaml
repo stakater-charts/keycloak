@@ -2,11 +2,11 @@ keycloak:
   labels:
     group: com.stakater.platform
     provider: stakater
-    version: 3.2.0
+    version: 4.5.0
   namespace: tools
   image:
-    name: fabric8/keycloak-postgres
-    tag: "v15751c8"
+    name: jboss/keycloak
+    tag: "4.5.0.Final"
     pullPolicy: IfNotPresent
   service:
     annotations:
