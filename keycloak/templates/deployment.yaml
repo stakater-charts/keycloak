@@ -98,6 +98,8 @@ items:
           - -Dkeycloak.migration.dir=/opt/jboss/keycloak/standalone/configuration/import/
           - -Dkeycloak.migration.strategy=IGNORE_EXISTING
           env:
+          - name: DB_VENDOR
+            value: postgres
           - name: POSTGRES_HOSTNAME
             valueFrom:
               secretKeyRef:
@@ -150,6 +152,8 @@ items:
                 key: kc.public.key
                 name: {{ template "name" . }}
           - name: HIDE_OPENSHIFT_BTN
+            value: "true"
+          - name: PROXY_ADDRESS_FORWARDING # Why? https://www.keycloak.org/docs/3.4/server_installation/index.html#identifying-client-ip-addresses
             value: "true"
           - name: HIDE_GITHUB_BTN
             value: "false"
