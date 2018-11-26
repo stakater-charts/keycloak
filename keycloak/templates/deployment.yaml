@@ -6,17 +6,17 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      configmap.reloader.stakater.com/reload: {{ template "name" . }}
-      secret.reloader.stakater.com/reload: {{ template "name" . }}
+      configmap.reloader.stakater.com/reload: {{ template "keycloak.name" . }}
+      secret.reloader.stakater.com/reload: {{ template "keycloak.name" . }}
     labels:
-{{ include "labels.stakater" . | indent 6 }}
-{{ include "labels.chart" . | indent 6 }}
-    name: {{ template "name" . }}
+{{ include "keycloak.labels.stakater" . | indent 6 }}
+{{ include "keycloak.labels.chart" . | indent 6 }}
+    name: {{ template "keycloak.name" . }}
   spec:
     replicas: 1
     selector:
       matchLabels:
-{{ include "labels.selector" . | indent 8 }}
+{{ include "keycloak.labels.selector" . | indent 8 }}
     strategy:
       type: Recreate
     template:
@@ -25,7 +25,7 @@ items:
           pod.alpha.kubernetes.io/init-containers: null
           pod.beta.kubernetes.io/init-containers: null
         labels:
-{{ include "labels.selector" . | indent 10 }}
+{{ include "keycloak.labels.selector" . | indent 10 }}
       spec:
         initContainers:
         - name: envvar-substitution
@@ -37,37 +37,37 @@ items:
           - name: AUTH_URL
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
                 key: auth.api.url
           - name: JENKINS_URL
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
                 key: jenkins.url
           - name: KEYCLOAK_URL
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
                 key: keycloak.url
           - name: KEYCLOAK_PRIVATEKEY
             valueFrom:
               secretKeyRef:
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
                 key: kc.private.key
           - name: KEYCLOAK_PUBLICKEY
             valueFrom:
               secretKeyRef:
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
                 key: kc.public.key
           - name: KEYCLOAK_CLIENTID_SECRET
             valueFrom:
               secretKeyRef:
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
                 key: kc.clientid.secret
           - name: K8S_API_SERVER
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
                 key: apiserver.url
           - name: HIDE_OPENSHIFT_BTN
             value: "true"
@@ -104,24 +104,24 @@ items:
             valueFrom:
               secretKeyRef:
                 key: db.host
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
           - name: DB_USER
             valueFrom:
               secretKeyRef:
                 key: db.user
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
           - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
                 key: db.password
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
           - name: OPERATING_MODE
             value: standalone
           - name: POSTGRES_PORT_5432_TCP_ADDR
             valueFrom:
               secretKeyRef:
                 key: db.host
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
           - name: INTERNAL_POD_IP
             valueFrom:
               fieldRef:
@@ -130,27 +130,27 @@ items:
             valueFrom:
               secretKeyRef:
                 key: kc.user
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
           - name: KEYCLOAK_PASSWORD
             valueFrom:
               secretKeyRef:
                 key: kc.password
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
           - name: KEYCLOAK_CLIENTID_SECRET
             valueFrom:
               secretKeyRef:
                 key: kc.clientid.secret
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
           - name: KEYCLOAK_PRIVATEKEY
             valueFrom:
               secretKeyRef:
                 key: kc.private.key
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
           - name: KEYCLOAK_PUBLICKEY
             valueFrom:
               secretKeyRef:
                 key: kc.public.key
-                name: {{ template "name" . }}
+                name: {{ template "keycloak.name" . }}
           - name: HIDE_OPENSHIFT_BTN
             value: "true"
           - name: PROXY_ADDRESS_FORWARDING # Why? https://www.keycloak.org/docs/3.4/server_installation/index.html#identifying-client-ip-addresses
@@ -165,7 +165,7 @@ items:
               port: 8080
             initialDelaySeconds: 180
             timeoutSeconds: 60
-          name: {{ template "name" . }}
+          name: {{ template "keycloak.name" . }}
           readinessProbe:
             httpGet:
               path: /auth
@@ -184,7 +184,7 @@ items:
             items:
             - key: fabric8-realm.json
               path: config/fabric8-realm.json
-            name: {{ template "name" . }}
+            name: {{ template "keycloak.name" . }}
           name: keycloak-config
         - gitRepo:
             directory: login

@@ -6,9 +6,9 @@ items:
     kind: "PersistentVolumeClaim"
     metadata:
       labels:
-{{ include "labels.stakater" . | indent 8 }}
-{{ include "labels.chart" . | indent 8 }}
-      name: {{ template "name" . }}
+{{ include "keycloak-db-storage.labels.stakater" . | indent 8 }}
+{{ include "keycloak-db-storage.labels.chart" . | indent 8 }}
+      name: {{ template "keycloak-db-storage.name" . }}
     spec:
       accessModes:
       - "ReadWriteOnce"

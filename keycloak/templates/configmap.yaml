@@ -11,9 +11,9 @@ items:
       expose.service-key.config.fabric8.io/jenkins: jenkins.url
       expose-no-path.service-key.config.fabric8.io/auth: auth.url
     labels:
-{{ include "labels.stakater" . | indent 6 }}
-{{ include "labels.chart" . | indent 6 }}
-    name: {{ template "name" . }}
+{{ include "keycloak.labels.stakater" . | indent 6 }}
+{{ include "keycloak.labels.chart" . | indent 6 }}
+    name: {{ template "keycloak.name" . }}
   data:
     db.url: keycloak-db
     db.port: "5432"
