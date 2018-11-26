@@ -5,4 +5,5 @@ def dummy = ""
 
 prepareAndUploadCharts {
     charts = [ "keycloak", "keycloak-db", "keycloak-db-storage" ]
+    isPublic = true
 }
