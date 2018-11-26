@@ -11,9 +11,9 @@ items:
 {{- end }}
     labels:
       expose: "true"
-{{ include "labels.stakater" . | indent 6 }}
-{{ include "labels.chart" . | indent 6 }}
-    name: {{ template "name" . }}
+{{ include "keycloak.labels.stakater" . | indent 6 }}
+{{ include "keycloak.labels.chart" . | indent 6 }}
+    name: {{ template "keycloak.name" . }}
   spec:
     ports:
     - name: http
@@ -21,4 +21,4 @@ items:
       protocol: TCP
       targetPort: 8080
     selector:
-{{ include "labels.selector" . | indent 6 }}
+{{ include "keycloak.labels.selector" . | indent 6 }}

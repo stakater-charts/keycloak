@@ -6,18 +6,18 @@ items:
   kind: Deployment
   metadata:
     labels:
-{{ include "labels.stakater" . | indent 6 }}
-{{ include "labels.chart" . | indent 6 }}
-    name: {{ template "name" . }}
+{{ include "keycloak-db.labels.stakater" . | indent 6 }}
+{{ include "keycloak-db.labels.chart" . | indent 6 }}
+    name: {{ template "keycloak-db.name" . }}
   spec:
     replicas: 1
     selector:
       matchLabels:
-{{ include "labels.selector" . | indent 8 }}
+{{ include "keycloak-db.labels.selector" . | indent 8 }}
     template:
       metadata:
         labels:
-{{ include "labels.selector" . | indent 10 }}
+{{ include "keycloak-db.labels.selector" . | indent 10 }}
       spec:
         initContainers:
         - name: fmp-volume-permission
@@ -50,7 +50,7 @@ items:
             failureThreshold: 6
             initialDelaySeconds: 60
             timeoutSeconds: 5
-          name: {{ template "name" . }}
+          name: {{ template "keycloak-db.name" . }}
           ports:
           - containerPort: 5432
             name: postgresql
