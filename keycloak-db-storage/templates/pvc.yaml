@@ -14,5 +14,5 @@ items:
       - "ReadWriteOnce"
       resources:
         requests:
-          storage: {{ .Values.keycloakdbStorage.capacity }}
+          storage: {{ .Values.keycloakdbstorage.capacity }}
       volumeName: keycloak-db-postgresql-data

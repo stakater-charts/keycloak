@@ -1,4 +1,4 @@
-keycloakdbStorage:
+keycloakdbstorage:
   labels:
     group: com.stakater.platform
     provider: stakater

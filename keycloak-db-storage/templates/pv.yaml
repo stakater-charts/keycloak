@@ -8,9 +8,9 @@ items:
     name: keycloak-db-postgresql-data
   spec:
     capacity:
-      storage: {{ .Values.keycloakdbStorage.capacity }}
+      storage: {{ .Values.keycloakdbstorage.capacity }}
     accessModes:
       - ReadWriteOnce
     nfs:
-      server: {{ .Values.keycloakdbStorage.efs.server }}
+      server: {{ .Values.keycloakdbstorage.efs.server }}
       path: "/keycloak-db-postgresql-data"
