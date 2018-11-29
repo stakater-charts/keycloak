@@ -7,6 +7,6 @@ keycloakdbstorage:
   capacity: 10Gi
   storageClassName: "efs"
   pv:
-    enabled: false
+    enabled: true
   efs:
     server: fs-f6d1425f.efs.us-west-2.amazonaws.com
