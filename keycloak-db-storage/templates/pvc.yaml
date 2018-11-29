@@ -15,7 +15,7 @@ items:
       resources:
         requests:
           storage: {{ .Values.keycloakdbstorage.capacity }}
-      {{- if .Values.keycloakdbstorage.pv.enabled -}}
+      {{- if .Values.keycloakdbstorage.pv.enabled }}
       volumeName: keycloak-db-postgresql-data
       {{- else }}
       storageClassName: {{ .Values.keycloakdbstorage.storageClassName }}
